@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  /* Alkuperäiset brändivärit */
+  --color-brand-green: #4CAF50;
+  --color-brand-darkGreen: #45a049;
+  --color-brand-neon: #39FF14;
+  --color-brand-light: #f9f9f9;
+  --color-brand-dark: #333333;
+
+  /* Alkuperäiset hohtavat varjot */
+  --shadow-neon: 0 0 10px #39FF14;
+  --shadow-neon-hover: 0 0 10px #39FF14, 0 0 30px rgba(57, 255, 20, 0.6);
+}
+
+/* Perusasetukset */
+body {
+  background-color: var(--color-brand-light);
+  color: var(--color-brand-dark);
+}
+
+/* Alkuperäinen tekstianimaatio */
+.anim-text-flow {
+  background: linear-gradient(45deg, #ffffff, #003300, #006600, #009900, #00cc00, #ffffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% 300%;
+  animation: textFlow 5s ease infinite;
+}
+
+@keyframes textFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-jungle-btn {
+  background: linear-gradient(-45deg, #1a4314, #2e6d23, #12786b, #004445); /* */
+  background-size: 400% 400%; /* */
+  animation: gradient-animation 8s ease infinite; /* */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 10px #39FF14; /* */
+  transition: transform 0.3s ease;
+}
+.animated-jungle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px #39FF14;
+}
+
+/* Kiinteä tausta ja utu */
+.portfolio-background {
+  position: absolute;
+  top: -10%; left: -10%; right: -10%; bottom: -10%;
+ /* background-image: url('/viidakko-tausta.webp'); /* HUOM: Lisää public-kansioon viidakkokuva! */
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: transform 0.1s ease-out;
+}
+
+.portfolio-fog {
+  position: absolute;
+  inset: 0;
+  /* Ylhäältä ja alhaalta 100% musta (logo sulautuu täydellisesti), 
+     keskeltä 92% musta (taustakuva kuultaa vain aavistuksen läpi) */
+  background: linear-gradient(to bottom, 
+    rgba(0, 0, 0, 0.98) 0%, 
+    rgba(0, 0, 0, 0.98) 15%, 
+    rgba(0, 0, 0, 0.85) 50%, 
+    rgba(0, 0, 0, 0.98) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pricing-page-bg {
+    background-color: var(--color-jungle-bg);
+    background-image: url("/viidakko-tausta.jpg"); /* Varmista, että tiedosto on public-kansiossa */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Korttien perustyylit */
+.pricing-card-base {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pricing-card-base:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
