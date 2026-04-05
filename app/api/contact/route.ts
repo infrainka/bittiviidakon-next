@@ -9,12 +9,12 @@ function checkRateLimit(ip: string): boolean {
   const limit = rateLimitMap.get(ip);
 
   if (!limit || now > limit.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + 3600000 }); // 1 hour window
+    rateLimitMap.set(ip, { count: 1, resetTime: now + 3600000 });
     return true;
   }
 
   if (limit.count >= 5) {
-    return false; // Max 5 emails per hour per IP
+    return false;
   }
 
   limit.count++;
@@ -34,7 +34,6 @@ function escapeHtml(text: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     if (!checkRateLimit(ip)) {
       return NextResponse.json(
@@ -43,9 +42,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, message } = await request.json();
+    const body = await request.json();
+    const { name, email, message, package: selectedPackage, qualifier } = body;
 
-    // Validation
     if (!name || !email || !message) {
       return NextResponse.json(
         { success: false, message: 'Täytä kaikki pakolliset kentät.' },
@@ -53,7 +52,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sanitize inputs
     if (typeof name !== 'string' || typeof email !== 'string' || typeof message !== 'string') {
       return NextResponse.json(
         { success: false, message: 'Virheellinen syöte.' },
@@ -64,8 +62,9 @@ export async function POST(request: NextRequest) {
     const sanitizedName = name.trim().substring(0, 100);
     const sanitizedEmail = email.trim().toLowerCase();
     const sanitizedMessage = message.trim().substring(0, 5000);
+    const sanitizedPackage = selectedPackage ? String(selectedPackage).trim().substring(0, 100) : null;
+    const sanitizedQualifier = qualifier ? String(qualifier).trim().substring(0, 100) : null;
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(sanitizedEmail)) {
       return NextResponse.json(
@@ -74,13 +73,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prevent email header injection
     if (sanitizedEmail.includes('\n') || sanitizedEmail.includes('\r')) {
       return NextResponse.json(
         { success: false, message: 'Virhe sähköpostiosoitteessa.' },
         { status: 400 }
       );
     }
+
+    const isPackageRequest = !!sanitizedPackage;
+    const subject = isPackageRequest
+      ? `Pakettipyyntö (${escapeHtml(sanitizedPackage!)}): ${escapeHtml(sanitizedName)}`
+      : `Yhteydenotto BittiViidakon.fi-sivustolta: ${escapeHtml(sanitizedName)}`;
+
+    const packageDetails = isPackageRequest
+      ? `
+        <p><strong>Paketti:</strong> ${escapeHtml(sanitizedPackage!)}</p>
+        ${sanitizedQualifier ? `<p><strong>Tyyppi:</strong> ${escapeHtml(sanitizedQualifier)}</p>` : ''}
+      `
+      : '';
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -95,11 +105,12 @@ export async function POST(request: NextRequest) {
     await transporter.sendMail({
       from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_FROM}>`,
       to: process.env.EMAIL_RECIPIENT,
-      subject: `Yhteydenotto BittiViidakon.fi-sivustolta: ${escapeHtml(sanitizedName)}`,
+      subject,
       html: `
         <p>Sait uuden viestin Bittiviidakon sivustolta.</p>
         <p><strong>Nimi:</strong> ${escapeHtml(sanitizedName)}</p>
         <p><strong>Sähköposti:</strong> ${escapeHtml(sanitizedEmail)}</p>
+        ${packageDetails}
         <p><strong>Viesti:</strong></p>
         <p>${escapeHtml(sanitizedMessage).replace(/\n/g, '<br>')}</p>
       `,

@@ -9,6 +9,11 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const handleMenuToggle = () => {
+    console.log("Menu toggle clicked, current state:", isMenuOpen);
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const navLinks = [
     { name: 'Etusivu', path: '/' },
     { name: 'Tarinani', path: '/tarinani' },
@@ -49,7 +54,8 @@ export default function Header() {
           {/* Hampurilaisvalikon painike (Mobiili) */}
           <div className="md:hidden flex items-center ml-auto">
             <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              type="button"
+              onClick={handleMenuToggle}
               className="text-black hover:text-[#32CD32] focus:outline-none"
             >
               <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">

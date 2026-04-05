@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
           // Content-Security-Policy
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' https://bittiviidakon.fi https://calendar.google.com https://*.google.com https://*.googleapis.com https://cdn.openwidget.com https://*.openwidget.com https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net https://*.greensock.com 'sha256-llmkQd2Bf5teYhrifdb3Do5GrTeG/xE0/DkAD57dgZQ='; style-src 'self' https://calendar.google.com https://*.google.com https://fonts.googleapis.com https://use.typekit.net https://p.typekit.net https://*.openwidget.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://use.typekit.net https://*.openwidget.com; img-src 'self' data: https://*.google.com https://*.googleapis.com https://*.openwidget.com; connect-src 'self' https://*.google.com https://*.openwidget.com; frame-src https://static.elfsight.com https://calendar.google.com https://*.google.com https://*.googleapis.com https://*.openwidget.com;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://bittiviidakon.fi https://calendar.google.com https://*.google.com https://*.googleapis.com https://cdn.openwidget.com https://*.openwidget.com https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net https://*.greensock.com; style-src 'self' https://calendar.google.com https://*.google.com https://fonts.googleapis.com https://use.typekit.net https://p.typekit.net https://*.openwidget.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://use.typekit.net https://*.openwidget.com; img-src 'self' data: https://*.google.com https://*.googleapis.com https://*.openwidget.com; connect-src 'self' https://*.google.com https://*.openwidget.com; frame-src https://static.elfsight.com https://calendar.google.com https://*.google.com https://*.googleapis.com https://*.openwidget.com;",
           },
         ],
       },
@@ -70,7 +70,7 @@ const nextConfig: NextConfig = {
       // Redirect www to non-www
       {
         source: '/:path*',
-        destination: '/:path*',
+        destination: 'https://bittiviidakon.fi/:path*',
         permanent: true,
         has: [
           {
