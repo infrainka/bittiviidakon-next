@@ -35,9 +35,9 @@ export default function RootLayout({
         {/* Footer, joka korvaa vanhan footer.php:n ja toistuu jokaisella sivulla */}
         <footer className="relative z-50 bg-gray-50 border-t border-gray-200 py-8 text-center mt-auto">
           <p className="text-gray-600">
-            © 2025 BittiViidakon {/* */}
+            © 2026 BittiViidakon {/* */}
             <span className="mx-2">|</span>
-            <a href="/tietosuoja.html" title="Lue tietosuojaseloste" className="hover:text-green-600 transition-colors">
+            <a href="/tietosuoja" title="Lue tietosuojaseloste" className="hover:text-green-600 transition-colors">
               Tietosuojaseloste
             </a> {/* */}
           </p>

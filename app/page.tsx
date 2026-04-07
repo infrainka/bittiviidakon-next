@@ -90,7 +90,7 @@ export default function Home() {
 
   return (
     <main 
-      className="relative min-h-screen w-full overflow-hidden bg-black cursor-grab active:cursor-grabbing"
+      className="relative min-h-screen w-full bg-black cursor-grab active:cursor-grabbing"
       onMouseDown={handleMouseDown}
     >
       {/* KERROS 1: Kiinteä tausta ja sumu parallax-efektillä */}
@@ -116,7 +116,7 @@ export default function Home() {
       </div>
 
       {/* KERROS 2: Rullaava sisältö */}
-      <div className="relative z-10 w-full overflow-y-auto h-screen">
+      <div className="relative z-10 w-full">
         
         {/* Hero-osio (Kelluu taustan päällä) */}
         <section className="w-full flex flex-col items-center justify-center min-h-[90vh] text-white text-center px-4 relative">

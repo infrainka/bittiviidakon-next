@@ -57,7 +57,6 @@ body {
 .portfolio-background {
   position: absolute;
   top: -10%; left: -10%; right: -10%; bottom: -10%;
- /* background-image: url('/viidakko-tausta.webp'); /* HUOM: Lisää public-kansioon viidakkokuva! */
   background-size: cover;
   background-position: center;
   z-index: 0;
