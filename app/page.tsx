@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import References from '@/components/References';
 
 export default function Home() {
   const [offsetX, setOffsetX] = useState(0);
@@ -150,53 +151,47 @@ export default function Home() {
               <Image src="/kontakti.webp" alt="Käyntikortti" width={500} height={300} className="rounded-[20px] shadow-lg mb-6" />
             </div>
 
-            <div className="bg-[rgb(224,242,190)] p-8 shadow-xl flex-1 rounded-[20px] w-full">
-              <h4 className="text-2xl font-bold mb-2">Lähetä viesti</h4>
-              <p className="mb-6 text-gray-700">Kysy mitä vain tai jätä yhteydenottopyyntö!</p>
-              <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
-                <input 
-                  type="text" 
-                  name="name"
-                  placeholder="Nimi*" 
-                  required 
-                  className="p-3 border border-white/50 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-400" 
-                />
-                <input 
-                  type="email" 
-                  name="email"
-                  placeholder="Sähköposti*" 
-                  required 
-                  className="p-3 border border-white/50 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-400" 
-                />
-                <textarea 
-                  rows={4} 
-                  name="message"
-                  placeholder="Viesti*" 
-                  required 
-                  className="p-3 border border-white/50 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-400">
-                </textarea>
-                
-                {formStatus.message && (
-                  <div className={`p-3 rounded-lg text-sm font-medium ${
-                    formStatus.type === 'success' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {formStatus.message}
-                  </div>
-                )}
-                
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="animated-jungle-btn text-white font-bold py-3 px-6 rounded-xl mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Lähetetään...' : 'Lähetä viesti'}
-                </button>
-              </form>
-            </div>
-          </section>
+   <div className="bg-[rgb(224,242,190)] p-8 shadow-xl flex-1 rounded-[20px] w-full">
+  <h4 className="text-2xl font-bold mb-2">Otetaan yhteyttä</h4>
+  <p className="mb-8 text-gray-700">Valitse sinulle sopivin tapa — vastataan nopeasti.</p>
+  
+  <div className="flex flex-col gap-4">
+    <a 
+      href="/palvelut"
+      className="animated-jungle-btn text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between group"
+    >
+      <div>
+        <p className="text-lg">Katso palvelut ja hinnat</p>
+        <p className="text-sm font-normal opacity-80">Lähetä palvelupyyntö suoraan täältä</p>
+      </div>
+      <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+    </a>
 
+    <a 
+      href="mailto:inka@bittiviidakon.fi"
+      className="bg-white/70 hover:bg-white transition-colors text-gray-800 font-bold py-4 px-6 rounded-xl flex items-center justify-between group border border-white"
+    >
+      <div>
+        <p className="text-lg">Kysele sähköpostilla</p>
+        <p className="text-sm font-normal text-gray-500">inka@bittiviidakon.fi</p>
+      </div>
+      <span className="text-xl opacity-40 group-hover:opacity-70 transition-opacity">✉</span>
+    </a>
+
+    <a 
+      href="tel:+3584578314113"
+      className="bg-white/70 hover:bg-white transition-colors text-gray-800 font-bold py-4 px-6 rounded-xl flex items-center justify-between group border border-white"
+    >
+      <div>
+        <p className="text-lg">Soita minut apuun</p>
+        <p className="text-sm font-normal text-gray-500">+358 45 783 14113</p>
+      </div>
+      <span className="text-xl opacity-40 group-hover:opacity-70 transition-opacity">✆</span>
+    </a>
+  </div>
+</div>
+          </section>
+          <References />
         </div>
       </div>
     </main>
